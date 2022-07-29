@@ -6,13 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.spacexdemo.Adapter.LaunchListAdapter
 import com.example.spacexdemo.R
+import com.example.spacexdemo.Repo.BaseRepo
+import com.example.spacexdemo.Repo.BaseViewModelFactory
+import com.example.spacexdemo.Service.BaseHTTPService
 import com.example.spacexdemo.viewmodel.LaunchListViewModel
 import kotlinx.android.synthetic.main.fragment_launch_list.*
 
 class LaunchListFragment : Fragment() {
 
     private lateinit var viewModel: LaunchListViewModel
+
+    private var adapter = LaunchListAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +39,37 @@ class LaunchListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[LaunchListViewModel::class.java]
+
+        val retrofitService = BaseHTTPService.getInstance()
+        val mainRepository = BaseRepo(retrofitService)
+
+
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            BaseViewModelFactory(mainRepository)
+        )[LaunchListViewModel::class.java]
+
+        setupRecyclerView()
+
+
+        viewModel.getAllLaunches()
+
+        swipeRefresh.setOnRefreshListener {
+            viewModel.getAllLaunches()
+
+            swipeRefresh.isRefreshing = false
+        }
+
         observeData()
     }
 
-    private fun observeData() {
+    private fun setupRecyclerView() {
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+    }
 
+    private fun observeData() {
+        println("observe data works")
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
                 if (!it) progressBar.visibility = View.GONE
@@ -48,9 +80,13 @@ class LaunchListFragment : Fragment() {
                 if (!it) errorText.visibility = View.GONE
             }
         }
-        viewModel.launches.observe(viewLifecycleOwner) {
+        viewModel.launchesList.observe(viewLifecycleOwner) {
             it?.let {
-                if (it.isEmpty()) recyclerView.visibility = View.GONE
+                println("update ui")
+                if (it.isNotEmpty()){
+                    recyclerView.visibility = View.VISIBLE
+                    adapter.updateCookList(it)
+                }
             }
         }
     }

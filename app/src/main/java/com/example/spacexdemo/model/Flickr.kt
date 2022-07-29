@@ -1,6 +1,11 @@
 package com.example.spacexdemo.model
 
+
+import com.google.gson.annotations.SerializedName
+
 data class Flickr(
-    val original: List<String>,
+    @SerializedName("original")
+    val original: List<Any>,
+    @SerializedName("small")
     val small: List<Any>
 )
