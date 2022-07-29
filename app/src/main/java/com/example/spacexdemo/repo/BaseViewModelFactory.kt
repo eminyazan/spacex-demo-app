@@ -1,4 +1,4 @@
-package com.example.spacexdemo.Repo
+package com.example.spacexdemo.repo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

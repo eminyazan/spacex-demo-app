@@ -1,17 +1,20 @@
-package com.example.spacexdemo.Adapter
+package com.example.spacexdemo.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacexdemo.R
 import com.example.spacexdemo.databinding.LaunchRowBinding
 import com.example.spacexdemo.model.Launch
+import com.example.spacexdemo.view.LaunchListFragmentDirections
 
 class LaunchListAdapter(private val launches: ArrayList<Launch>) :
-    RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>() {
+    RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>(), LaunchClickListener {
 
-    class LaunchViewHolder(val customView: LaunchRowBinding) :
+    class LaunchViewHolder(var customView: LaunchRowBinding) :
         RecyclerView.ViewHolder(customView.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchViewHolder {
@@ -22,9 +25,8 @@ class LaunchListAdapter(private val launches: ArrayList<Launch>) :
     }
 
     override fun onBindViewHolder(holder: LaunchViewHolder, position: Int) {
-        holder.customView.apply {
-            this.launch = launches[position]
-        }
+        holder.customView.launch = launches[position]
+        holder.customView.listener = this
     }
 
     override fun getItemCount(): Int {
@@ -36,4 +38,11 @@ class LaunchListAdapter(private val launches: ArrayList<Launch>) :
         launches.addAll(newCooksList)
         notifyDataSetChanged()
     }
+
+    override fun launchTapped(view: View) {
+        val action=LaunchListFragmentDirections.goToDetail()
+        Navigation.findNavController(view).navigate(action)
+    }
+
+
 }

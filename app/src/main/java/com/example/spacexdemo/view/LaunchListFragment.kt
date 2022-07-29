@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.spacexdemo.Adapter.LaunchListAdapter
+import com.example.spacexdemo.adapter.LaunchListAdapter
 import com.example.spacexdemo.R
-import com.example.spacexdemo.Repo.BaseRepo
-import com.example.spacexdemo.Repo.BaseViewModelFactory
-import com.example.spacexdemo.Service.BaseHTTPService
+import com.example.spacexdemo.repo.BaseRepo
+import com.example.spacexdemo.repo.BaseViewModelFactory
+import com.example.spacexdemo.service.BaseHTTPService
 import com.example.spacexdemo.viewmodel.LaunchListViewModel
 import kotlinx.android.synthetic.main.fragment_launch_list.*
 

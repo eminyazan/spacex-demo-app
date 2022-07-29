@@ -1,6 +1,6 @@
-package com.example.spacexdemo.Service
+package com.example.spacexdemo.service
 
-import com.example.spacexdemo.Constans.BASE_URL
+import com.example.spacexdemo.constans.BASE_URL
 import com.example.spacexdemo.model.Launch
 import retrofit2.Response
 import retrofit2.Retrofit

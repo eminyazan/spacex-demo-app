@@ -1,6 +1,6 @@
-package com.example.spacexdemo.Repo
+package com.example.spacexdemo.repo
 
-import com.example.spacexdemo.Service.BaseHTTPService
+import com.example.spacexdemo.service.BaseHTTPService
 
 
 class BaseRepo constructor(private val retrofitService: BaseHTTPService) {
