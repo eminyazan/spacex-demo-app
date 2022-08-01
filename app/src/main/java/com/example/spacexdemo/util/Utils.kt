@@ -1,5 +1,6 @@
 package com.example.spacexdemo.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.widget.ImageView
@@ -40,18 +41,15 @@ fun downloadImage(imageView: ImageView, url: String?) {
 
 }
 
+@SuppressLint("SimpleDateFormat")
 @BindingAdapter("convert_date")
-fun convertDate(textView: TextView, timestamp: Long) {
+fun convertDate(textView: TextView, timestamp: Int) {
 
     //TODO: Fix
-
-    val stamp = Timestamp(timestamp)
+    val stamp = Timestamp(timestamp.toLong()*1000)
     val date = Date(stamp.time)
-
-    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-
-    val formattedDate = sdf.format(date)
-
-    println("Date --> $formattedDate")
-    textView.text = formattedDate
+    val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
+    val formatted = sdf.format(date)
+    println("Date --> $formatted")
+    textView.text = formatted
 }
