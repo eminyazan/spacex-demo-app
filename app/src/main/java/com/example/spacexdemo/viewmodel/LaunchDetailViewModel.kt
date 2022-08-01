@@ -18,7 +18,6 @@ class LaunchDetailViewModel(private val repo: BaseRepo) : ViewModel() {
 
     fun getLaunch(id:String) {
         loading.value = true
-        launch.postValue(null)
         error.value = false
 
         viewModelScope.launch {

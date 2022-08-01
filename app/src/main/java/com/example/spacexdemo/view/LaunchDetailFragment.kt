@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
+import com.example.spacexdemo.constans.WEB_VIEW_DEFAULT_URL
 import com.example.spacexdemo.databinding.FragmentLaunchDetailBinding
 import com.example.spacexdemo.repo.BaseRepo
 import com.example.spacexdemo.repo.BaseViewModelFactory
@@ -59,6 +61,27 @@ class LaunchDetailFragment : Fragment() {
         } else {
             Toast.makeText(view.context, "Error occurred try again later", Toast.LENGTH_LONG).show()
         }
+
+        webViewButton.setOnClickListener {
+            val launch = viewModel.launch.value
+            launch?.let { launchNullable ->
+                val launchUrl = launchNullable.links.reddit.launch
+                if (launchUrl == null) {
+                    goToWebView(view, WEB_VIEW_DEFAULT_URL)
+                } else {
+                    goToWebView(view, launchUrl.toString())
+                }
+
+            }
+
+        }
+    }
+
+    private fun goToWebView(view: View, url: String) {
+
+        val action = LaunchDetailFragmentDirections.goToWebView(url)
+        Navigation.findNavController(view).navigate(action)
+
     }
 
     private fun observeData() {
@@ -96,5 +119,6 @@ class LaunchDetailFragment : Fragment() {
         }
 
     }
+
 
 }

@@ -25,6 +25,19 @@
         <argument
             android:name="launch_id_key"
             app:argType="string"
-            app:nullable="true" />
+            app:nullable="false" />
+        <action
+            android:id="@+id/goToWebView"
+            app:destination="@id/webViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.spacexdemo.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" >
+        <argument
+            android:name="launch_url"
+            app:argType="string"
+            android:defaultValue="https://www.spacex.com/" />
     </fragment>
 </navigation>
