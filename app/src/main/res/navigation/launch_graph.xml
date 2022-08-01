@@ -22,5 +22,9 @@
         <action
             android:id="@+id/goToList"
             app:destination="@id/launchListFragment" />
+        <argument
+            android:name="launch_id_key"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

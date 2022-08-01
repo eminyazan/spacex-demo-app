@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -7,6 +8,7 @@
         <variable
             name="launch"
             type="com.example.spacexdemo.model.Launch" />
+
         <variable
             name="listener"
             type="com.example.spacexdemo.adapter.LaunchClickListener" />
@@ -22,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="117dp"
             android:layout_margin="1dp"
-            android:onClick="@{listener::launchTapped}"
+            android:onClick='@{(view)->listener.launchTapped(view,launch.id)}'
             android:orientation="horizontal">
 
             <ImageView
@@ -30,9 +32,10 @@
                 download_image="@{launch.links.patch.small}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="7dp"
                 android:layout_marginTop="5dp"
-                android:minWidth="100dp" />
+                android:layout_marginEnd="7dp"
+                android:minWidth="100dp"
+                android:contentDescription="@string/desc_of_image"/>
 
 
             <LinearLayout
@@ -65,7 +68,7 @@
                         android:layout_marginEnd="0dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@{launch.dateLocal==null ? `Date unknown` : launch.dateLocal}"
+                        convert_date="@{launch.dateUnix}"
                         android:textSize="16sp"
                         android:textStyle="italic" />
 
@@ -89,10 +92,8 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            app:dividerThickness="3dp"
-            />
+            app:dividerThickness="3dp" />
     </LinearLayout>
-
 
 
 </layout>

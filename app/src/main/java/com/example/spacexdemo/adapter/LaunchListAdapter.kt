@@ -1,5 +1,6 @@
 package com.example.spacexdemo.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacexdemo.R
+import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.databinding.LaunchRowBinding
 import com.example.spacexdemo.model.Launch
 import com.example.spacexdemo.view.LaunchListFragmentDirections
@@ -39,8 +41,10 @@ class LaunchListAdapter(private val launches: ArrayList<Launch>) :
         notifyDataSetChanged()
     }
 
-    override fun launchTapped(view: View) {
-        val action=LaunchListFragmentDirections.goToDetail()
+    override fun launchTapped(view: View, launchId: String) {
+        val bundle = Bundle()
+        bundle.putString(LAUNCH_ID_KEY, launchId)
+        val action = LaunchListFragmentDirections.goToDetail(launchIdKey = launchId)
         Navigation.findNavController(view).navigate(action)
     }
 

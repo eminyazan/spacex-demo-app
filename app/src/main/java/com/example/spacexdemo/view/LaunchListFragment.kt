@@ -24,10 +24,9 @@ class LaunchListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        registerViewModel()
 
-        arguments?.let {
-
-        }
+        viewModel.getAllLaunches()
     }
 
     override fun onCreateView(
@@ -40,19 +39,7 @@ class LaunchListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val retrofitService = BaseHTTPService.getInstance()
-        val mainRepository = BaseRepo(retrofitService)
-
-
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            BaseViewModelFactory(mainRepository)
-        )[LaunchListViewModel::class.java]
-
         setupRecyclerView()
-
-
-        viewModel.getAllLaunches()
 
         swipeRefresh.setOnRefreshListener {
             viewModel.getAllLaunches()
@@ -63,13 +50,21 @@ class LaunchListFragment : Fragment() {
         observeData()
     }
 
+    private fun registerViewModel() {
+        val retrofitService = BaseHTTPService.getInstance()
+        val mainRepository = BaseRepo(retrofitService)
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            BaseViewModelFactory(mainRepository)
+        )[LaunchListViewModel::class.java]
+    }
+
     private fun setupRecyclerView() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     private fun observeData() {
-        println("observe data works")
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
                 if (!it) progressBar.visibility = View.GONE
@@ -82,8 +77,7 @@ class LaunchListFragment : Fragment() {
         }
         viewModel.launchesList.observe(viewLifecycleOwner) {
             it?.let {
-                println("update ui")
-                if (it.isNotEmpty()){
+                if (it.isNotEmpty()) {
                     recyclerView.visibility = View.VISIBLE
                     adapter.updateCookList(it)
                 }
