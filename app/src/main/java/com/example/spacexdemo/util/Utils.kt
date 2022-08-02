@@ -12,7 +12,6 @@ import com.bumptech.glide.request.RequestOptions
 import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.*
 
 
 fun ImageView.downloadImageFromUrl(url: String?, context: Context) {
@@ -44,8 +43,6 @@ fun downloadImage(imageView: ImageView, url: String?) {
 @SuppressLint("SimpleDateFormat")
 @BindingAdapter("convert_date")
 fun convertDate(textView: TextView, timestamp: Int) {
-
-    //TODO: Fix
     val stamp = Timestamp(timestamp.toLong()*1000)
     val date = Date(stamp.time)
     val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")

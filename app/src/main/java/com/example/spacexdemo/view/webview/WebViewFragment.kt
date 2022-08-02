@@ -1,12 +1,12 @@
-package com.example.spacexdemo
+package com.example.spacexdemo.view.webview
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.WEB_VIEW_DEFAULT_URL
 import com.example.spacexdemo.constans.WEB_VIEW_KEY
 import kotlinx.android.synthetic.main.fragment_web_view.*

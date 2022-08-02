@@ -18,12 +18,13 @@ import kotlinx.android.synthetic.main.fragment_launch_list.*
 class LaunchListFragment : Fragment() {
 
     private lateinit var viewModel: LaunchListViewModel
+    private lateinit var loader: LoadingDialog
 
     private var adapter = LaunchListAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        loader = LoadingDialog(requireContext())
         registerViewModel()
 
         viewModel.getAllLaunches()
@@ -67,17 +68,23 @@ class LaunchListFragment : Fragment() {
     private fun observeData() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                if (!it) progressBar.visibility = View.GONE
+                if (it){
+                    loader.show()
+                }
             }
         }
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                if (!it) errorText.visibility = View.GONE
+                if (!it) {
+                    errorText.visibility = View.GONE
+                    loader.cancel()
+                }
             }
         }
         viewModel.launchesList.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.isNotEmpty()) {
+                    loader.cancel()
                     recyclerView.visibility = View.VISIBLE
                     adapter.updateCookList(it)
                 }

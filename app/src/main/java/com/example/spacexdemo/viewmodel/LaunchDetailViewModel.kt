@@ -1,22 +1,19 @@
 package com.example.spacexdemo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexdemo.model.Launch
 import com.example.spacexdemo.repo.BaseRepo
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class LaunchDetailViewModel(private val repo: BaseRepo) : ViewModel() {
+class LaunchDetailViewModel(private val repo: BaseRepo) : BaseViewModel() {
 
-    val loading = MutableLiveData<Boolean>()
-    val error = MutableLiveData<Boolean>()
     val launch = MutableLiveData<Launch?>()
 
     private var job: Job? = null
 
-    fun getLaunch(id:String) {
+    fun getLaunch(id: String) {
         loading.value = true
         error.value = false
 

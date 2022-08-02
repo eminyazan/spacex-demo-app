@@ -2,16 +2,13 @@ package com.example.spacexdemo.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexdemo.repo.BaseRepo
 import com.example.spacexdemo.model.Launch
 import kotlinx.coroutines.*
 
-class LaunchListViewModel constructor(private val mainRepository: BaseRepo) : ViewModel() {
+class LaunchListViewModel constructor(private val mainRepository: BaseRepo) : BaseViewModel() {
 
-    val loading = MutableLiveData<Boolean>()
-    val error = MutableLiveData<Boolean>()
     val launchesList = MutableLiveData<List<Launch>>()
 
     private var job: Job? = null
