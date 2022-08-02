@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.spacexdemo.viewmodel.LaunchDetailViewModel
 import com.example.spacexdemo.viewmodel.LaunchListViewModel
 
+@Suppress("UNCHECKED_CAST")
 class BaseViewModelFactory constructor(private val repository: BaseRepo) :
     ViewModelProvider.Factory {
 
