@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat
 fun ImageView.downloadImageFromUrl(url: String?, context: Context) {
     val options = RequestOptions().placeholder(createPlaceHolder(context))
     url?.let {
-        println("Null degıl")
         Glide.with(context).setDefaultRequestOptions(options).load(Uri.parse(it)).into(this)
     }
 
@@ -47,6 +46,5 @@ fun convertDate(textView: TextView, timestamp: Int) {
     val date = Date(stamp.time)
     val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
     val formatted = sdf.format(date)
-    println("Date --> $formatted")
     textView.text = formatted
 }

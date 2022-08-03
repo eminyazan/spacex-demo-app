@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">SpaceX Demo</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_message">It looks Elon\'s rockets have some problems not about us 😃</string>
     <string name="desc_of_image">desc of image</string>
     <string name="open_in_browser">Open In Browser</string>
+    <string name="dialog_archive">Do you want to archive this launch?</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_approve">Yes</string>
 </resources>

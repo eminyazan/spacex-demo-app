@@ -30,7 +30,6 @@ class WebViewFragment : Fragment() {
             res?.let {
                 url = it
                 setupWebView(url)
-                println("URL --> $url")
             }
         }
 

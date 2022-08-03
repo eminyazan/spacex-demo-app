@@ -51,6 +51,7 @@ class LaunchListFragment : Fragment() {
         observeData()
     }
 
+
     private fun registerViewModel() {
         val retrofitService = BaseHTTPService.getInstance()
         val mainRepository = BaseRepo(retrofitService)
