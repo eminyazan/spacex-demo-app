@@ -9,7 +9,7 @@ import kotlinx.coroutines.*
 
 class LaunchListViewModel constructor(private val mainRepository: BaseRepo) : BaseViewModel() {
 
-    val launchesList = MutableLiveData<List<Launch>>()
+    val launchesList = MutableLiveData<MutableList<Launch>>()
 
     private var job: Job? = null
 

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.LaunchDetailFragment">
+    tools:context=".view.LaunchDetailActivity">
 
     <data>
 
@@ -24,56 +24,51 @@
             android:id="@+id/image"
             download_image="@{launch.links.patch.large}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="40dp"
             android:adjustViewBounds="true"
             android:alpha="0.81"
             android:contentDescription="@string/desc_of_image"
+            android:maxHeight="320dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginTop="50dp"
-            android:background="#716C6C"
-            android:ellipsize="end"
-            android:padding="20dp"
-            android:singleLine="true"
-            android:text="@{launch.name}"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/date"
-            convert_date="@{launch.dateUnix}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:background="#C8C3C3"
-            android:ellipsize="end"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textAlignment="textEnd"
-            android:textSize="15sp"
-            android:textStyle="italic"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="2" />
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.85"
+            android:alpha="0.75"
+            android:background="#DAD5D5"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/date"
+                convert_date="@{launch.dateUnix}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:ellipsize="end"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:textAlignment="textEnd"
+                android:textSize="15sp"
+                android:textStyle="italic|bold" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.75"
+            android:background="@color/black"
             app:layout_constraintBottom_toTopOf="@id/webViewButton"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+
+            >
 
             <TextView
                 android:id="@+id/details"
@@ -81,13 +76,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginBottom="20dp"
-                android:background="#EFE4E3"
                 android:ellipsize="end"
                 android:maxHeight="300dp"
                 android:maxLines="12"
                 android:padding="10dp"
                 android:text="@{launch.details==null ? `Details Unknown` : launch.details}"
                 android:textAlignment="textStart"
+                android:textColor="@color/white"
                 android:textSize="25sp" />
         </FrameLayout>
 

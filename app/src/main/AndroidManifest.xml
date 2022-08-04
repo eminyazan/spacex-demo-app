@@ -29,9 +29,9 @@
 
         <activity
             android:name=".view.MainActivity"
-            android:exported="true">
+            android:exported="true" />
 
-        </activity>
+        <activity android:name=".view.LaunchDetailActivity"/>
 
     </application>
 

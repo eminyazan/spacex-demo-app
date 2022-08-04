@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.spacexdemo.R
 import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -17,9 +18,13 @@ import java.text.SimpleDateFormat
 fun ImageView.downloadImageFromUrl(url: String?, context: Context) {
     val options = RequestOptions().placeholder(createPlaceHolder(context))
     url?.let {
-        Glide.with(context).setDefaultRequestOptions(options).load(Uri.parse(it)).into(this)
-    }
+        Glide.with(this)
+            .setDefaultRequestOptions(options)
+            .load(Uri.parse(it))
+            .error(R.drawable.error)
+            .into(this)
 
+    }
 }
 
 
@@ -42,7 +47,7 @@ fun downloadImage(imageView: ImageView, url: String?) {
 @SuppressLint("SimpleDateFormat")
 @BindingAdapter("convert_date")
 fun convertDate(textView: TextView, timestamp: Int) {
-    val stamp = Timestamp(timestamp.toLong()*1000)
+    val stamp = Timestamp(timestamp.toLong() * 1000)
     val date = Date(stamp.time)
     val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm")
     val formatted = sdf.format(date)

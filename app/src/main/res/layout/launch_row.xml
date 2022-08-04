@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -16,8 +15,12 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/launchRowLayout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:longClickable="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,6 +28,7 @@
             android:layout_height="117dp"
             android:layout_margin="1dp"
             android:onClick='@{(view)->listener.launchTapped(view,launch.id)}'
+            android:onLongClick='@{(view)->listener.launchLongTapped(view,launch)}'
             android:orientation="horizontal">
 
             <ImageView
@@ -34,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="7dp"
-                android:minWidth="100dp"
-                android:contentDescription="@string/desc_of_image"/>
+                android:contentDescription="@string/desc_of_image"
+                android:minWidth="100dp" />
 
 
             <LinearLayout
@@ -62,13 +66,13 @@
 
                     <TextView
                         android:id="@+id/launchDate"
+                        convert_date="@{launch.dateUnix}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="0dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        convert_date="@{launch.dateUnix}"
                         android:textSize="16sp"
                         android:textStyle="italic" />
 

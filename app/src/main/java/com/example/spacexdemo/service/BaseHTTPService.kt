@@ -13,7 +13,7 @@ interface BaseHTTPService {
 
     //https://api.spacexdata.com/v5/launches/:id
     @GET("v5/launches")
-    suspend fun getLaunches(): Response<List<Launch>>
+    suspend fun getLaunches(): Response<MutableList<Launch>>
 
 
     @GET("v5/launches/{id}")

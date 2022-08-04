@@ -16,9 +16,9 @@
     </fragment>
     <fragment
         android:id="@+id/launchDetailFragment"
-        android:name="com.example.spacexdemo.view.LaunchDetailFragment"
+        android:name="com.example.spacexdemo.view.LaunchDetailActivity"
         android:label="fragment_launch_detail"
-        tools:layout="@layout/fragment_launch_detail" >
+        tools:layout="@layout/activity_launch_detail" >
         <action
             android:id="@+id/goToList"
             app:destination="@id/launchListFragment" />

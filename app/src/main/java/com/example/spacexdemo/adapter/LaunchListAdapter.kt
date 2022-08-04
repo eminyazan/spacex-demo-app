@@ -1,32 +1,31 @@
 package com.example.spacexdemo.adapter
 
-import android.os.Bundle
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.databinding.LaunchRowBinding
 import com.example.spacexdemo.model.Launch
-import com.example.spacexdemo.view.LaunchListFragmentDirections
+import com.example.spacexdemo.view.LaunchDetailActivity
+
 
 class LaunchListAdapter(private val launches: ArrayList<Launch>) :
     RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>(), LaunchClickListener {
     private lateinit var binding: LaunchRowBinding
 
-    class LaunchViewHolder(var customView: LaunchRowBinding) :
+    inner class LaunchViewHolder(var customView: LaunchRowBinding) :
         RecyclerView.ViewHolder(customView.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         binding =
-            DataBindingUtil.inflate<LaunchRowBinding>(inflater, R.layout.launch_row, parent, false)
+            DataBindingUtil.inflate(inflater, R.layout.launch_row, parent, false)
         return LaunchViewHolder(binding)
     }
 
@@ -46,29 +45,17 @@ class LaunchListAdapter(private val launches: ArrayList<Launch>) :
     }
 
     override fun launchTapped(view: View, launchId: String) {
-        val bundle = Bundle()
-        bundle.putString(LAUNCH_ID_KEY, launchId)
-        val action = LaunchListFragmentDirections.goToDetail(launchIdKey = launchId)
-        Navigation.findNavController(view).navigate(action)
+        val intent = Intent(view.context, LaunchDetailActivity::class.java)
+        intent.putExtra(LAUNCH_ID_KEY, launchId)
+        startActivity(view.context, intent, null)
     }
 
-    override fun launchLongTapped(view: View, launch: Launch) {
-
-//        binding.launchRowItem.setOnLongClickListener{
-//            return@setOnLongClickListener true
-//        }
-        println("Long tapped ---> ")
-
-        // TODO: update for open dialog
-        val builder: AlertDialog.Builder? = view.context?.let {
-            AlertDialog.Builder(it)
-        }
-
-        builder?.setMessage(R.string.dialog_archive)
-            ?.setTitle(R.string.dialog_archive)
-        val dialog: AlertDialog? = builder?.create()
-
-        dialog?.show()
+    override fun launchLongTapped(view: View,launch: Launch): Boolean {
+        val position =launches.indexOf(launch)
+        launches.removeAt(position)
+        notifyItemRemoved(position)
+        Toast.makeText(view.context, "${launch.name} archived ", Toast.LENGTH_SHORT).show()
+        return true
     }
 
 

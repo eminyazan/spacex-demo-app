@@ -69,7 +69,7 @@ class LaunchListFragment : Fragment() {
     private fun observeData() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                if (it){
+                if (it) {
                     loader.show()
                 }
             }
@@ -92,6 +92,16 @@ class LaunchListFragment : Fragment() {
             }
         }
     }
+
+
+//    override fun launchLongTapped(view: View, launch: Launch, position: Int) {
+//        val res = viewModel.removeAtPosition(position)
+//        if (res) {
+//            adapter.notifyItemRemoved(position)
+//            Toast.makeText(view.context, "Removed item", Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(view.context, "Removed item", Toast.LENGTH_SHORT).show()
+//        }
 
 
 }

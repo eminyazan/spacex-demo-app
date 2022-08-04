@@ -29,6 +29,7 @@ class SplashActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 3000)
+            // TODO: Update milli sec below to the 2000- 3000
+        }, 100)
     }
 }
