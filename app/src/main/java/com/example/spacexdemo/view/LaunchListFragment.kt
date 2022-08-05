@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexdemo.adapter.LaunchListAdapter
 import com.example.spacexdemo.R
 import com.example.spacexdemo.repo.BaseRepo
-import com.example.spacexdemo.repo.BaseViewModelFactory
 import com.example.spacexdemo.service.BaseHTTPService
 import com.example.spacexdemo.viewmodel.LaunchListViewModel
 import kotlinx.android.synthetic.main.fragment_launch_list.*
@@ -25,6 +24,7 @@ class LaunchListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loader = LoadingDialog(requireContext())
+
         registerViewModel()
 
         viewModel.getAllLaunches()
@@ -53,12 +53,7 @@ class LaunchListFragment : Fragment() {
 
 
     private fun registerViewModel() {
-        val retrofitService = BaseHTTPService.getInstance()
-        val mainRepository = BaseRepo(retrofitService)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            BaseViewModelFactory(mainRepository)
-        )[LaunchListViewModel::class.java]
+        viewModel = ViewModelProvider(this)[LaunchListViewModel::class.java]
     }
 
     private fun setupRecyclerView() {
@@ -92,16 +87,5 @@ class LaunchListFragment : Fragment() {
             }
         }
     }
-
-
-//    override fun launchLongTapped(view: View, launch: Launch, position: Int) {
-//        val res = viewModel.removeAtPosition(position)
-//        if (res) {
-//            adapter.notifyItemRemoved(position)
-//            Toast.makeText(view.context, "Removed item", Toast.LENGTH_SHORT).show()
-//        } else {
-//            Toast.makeText(view.context, "Removed item", Toast.LENGTH_SHORT).show()
-//        }
-
 
 }

@@ -1,16 +1,19 @@
 package com.example.spacexdemo.viewmodel
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.spacexdemo.repo.BaseRepo
 import com.example.spacexdemo.model.Launch
+import com.example.spacexdemo.service.BaseHTTPService
 import kotlinx.coroutines.*
 
-class LaunchListViewModel constructor(private val mainRepository: BaseRepo) : BaseViewModel() {
+class LaunchListViewModel constructor(application: Application) : BaseViewModel(application) {
 
     val launchesList = MutableLiveData<MutableList<Launch>>()
-
+    private val retrofitService = BaseHTTPService.getInstance()
+    private val mainRepository = BaseRepo(retrofitService)
     private var job: Job? = null
 
     fun getAllLaunches() {
@@ -20,6 +23,7 @@ class LaunchListViewModel constructor(private val mainRepository: BaseRepo) : Ba
 
         viewModelScope.launch {
             Log.d("Thread Inside", Thread.currentThread().name)
+
             val res = mainRepository.getLaunches()
             if (res.isSuccessful) {
                 launchesList.postValue(res.body())

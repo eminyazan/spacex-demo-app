@@ -3,13 +3,20 @@ package com.example.spacexdemo.model
 
 import com.google.gson.annotations.SerializedName
 
+
 data class Reddit(
+
     @SerializedName("campaign")
-    val campaign: Any?,
+    var campaign: String?,
+
     @SerializedName("launch")
-    val launch: Any?,
+    var launch: String?,
+
+
+
     @SerializedName("media")
     val media: Any?,
+
     @SerializedName("recovery")
     val recovery: Any?
 )

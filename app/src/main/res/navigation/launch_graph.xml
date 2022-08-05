@@ -13,6 +13,9 @@
         <action
             android:id="@+id/goToDetail"
             app:destination="@id/launchDetailFragment" />
+        <action
+            android:id="@+id/goToArchive"
+            app:destination="@id/archiveFragment" />
     </fragment>
     <fragment
         android:id="@+id/launchDetailFragment"
@@ -39,5 +42,15 @@
             android:name="launch_url"
             app:argType="string"
             android:defaultValue="https://www.spacex.com/" />
+    </fragment>
+    <fragment
+        android:id="@+id/archiveFragment"
+        android:name="com.example.spacexdemo.view.ArchiveFragment"
+        android:label="fragment_archived"
+        tools:layout="@layout/fragment_archived" >
+        <argument
+            android:name="localLaunch"
+            app:argType="com.example.spacexdemo.model.LocalLaunch"
+            app:nullable="true" />
     </fragment>
 </navigation>

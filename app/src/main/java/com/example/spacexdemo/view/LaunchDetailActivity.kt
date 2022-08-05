@@ -14,9 +14,9 @@ import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.constans.WEB_VIEW_DEFAULT_URL
 import com.example.spacexdemo.databinding.ActivityLaunchDetailBinding
 import com.example.spacexdemo.repo.BaseRepo
-import com.example.spacexdemo.repo.BaseViewModelFactory
 import com.example.spacexdemo.service.BaseHTTPService
 import com.example.spacexdemo.viewmodel.LaunchDetailViewModel
+import com.example.spacexdemo.viewmodel.LaunchListViewModel
 import java.lang.NullPointerException
 
 class LaunchDetailActivity : AppCompatActivity() {
@@ -70,7 +70,7 @@ class LaunchDetailActivity : AppCompatActivity() {
         binding.webViewButton.setOnClickListener {
             val launch = viewModel.launch.value
             launch?.let { launchNullable ->
-                val launchUrl = launchNullable.links.reddit.launch
+                val launchUrl = launchNullable.links?.reddit?.launch
                 if (launchUrl == null) {
                     goToWebView(binding.detailWidgetConstrainLayout.rootView, WEB_VIEW_DEFAULT_URL)
                 } else {
@@ -113,13 +113,8 @@ class LaunchDetailActivity : AppCompatActivity() {
 
     private fun registerViewModel(): Boolean {
         return try {
-            val retrofitService = BaseHTTPService.getInstance()
-            val mainRepository = BaseRepo(retrofitService)
 
-            viewModel = ViewModelProvider(
-                this,
-                BaseViewModelFactory(mainRepository)
-            )[LaunchDetailViewModel::class.java]
+            viewModel = ViewModelProvider(this)[LaunchDetailViewModel::class.java]
 
             true
         } catch (e: NullPointerException) {

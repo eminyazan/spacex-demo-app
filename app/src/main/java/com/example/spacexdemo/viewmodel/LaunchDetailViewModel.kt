@@ -1,16 +1,19 @@
 package com.example.spacexdemo.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.spacexdemo.model.Launch
 import com.example.spacexdemo.repo.BaseRepo
+import com.example.spacexdemo.service.BaseHTTPService
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class LaunchDetailViewModel(private val repo: BaseRepo) : BaseViewModel() {
+class LaunchDetailViewModel(application: Application) : BaseViewModel(application) {
 
     val launch = MutableLiveData<Launch?>()
-
+    private val retrofitService = BaseHTTPService.getInstance()
+    private val mainRepository = BaseRepo(retrofitService)
     private var job: Job? = null
 
     fun getLaunch(id: String) {
@@ -18,7 +21,7 @@ class LaunchDetailViewModel(private val repo: BaseRepo) : BaseViewModel() {
         error.value = false
 
         viewModelScope.launch {
-            val res = repo.getLaunch(id = id)
+            val res = mainRepository.getLaunch(id = id)
             if (res.isSuccessful) {
                 launch.postValue(res.body())
                 loading.value = false

@@ -1,9 +1,11 @@
 package com.example.spacexdemo.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 
-abstract class BaseViewModel : ViewModel() {
+
+abstract class BaseViewModel (application: Application): AndroidViewModel(application) {
 
     val loading = MutableLiveData<Boolean>()
     val error = MutableLiveData<Boolean>()

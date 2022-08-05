@@ -3,11 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/drawable/ic_archive_tab_foreground.xml" value="0.1475" />
+        <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/drawable/ic_online_tab_foreground.xml" value="0.1475" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout-land/fragment_launch_detail.xml" value="0.21516754850088182" />
+        <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/activity_archived.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/activity_launch_detail.xml" value="0.1" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/custom_web_view.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/error_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/fragment_archived.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/fragment_launch_detail.xml" value="0.176" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/fragment_launch_list.xml" value="0.25" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/fragment_web_view.xml" value="0.11302083333333333" />
@@ -15,6 +20,8 @@
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/launch_row.xml" value="0.1" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/loading_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/loading_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/layout/local_launch_row.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1965" />
         <entry key="..\:/Users/eminy/StudioProjects/SpaceXDemo/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1965" />
       </map>
