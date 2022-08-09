@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +13,18 @@ import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.databinding.LocalLaunchRowBinding
 import com.example.spacexdemo.model.LocalLaunch
 import com.example.spacexdemo.view.LaunchDetailActivity
+import com.example.spacexdemo.viewmodel.ArchiveViewModel
 
-class LocalLaunchAdapter(private var localLaunches: ArrayList<LocalLaunch>):
-    RecyclerView.Adapter<LocalLaunchAdapter.LocalLaunchViewHolder>(),LaunchClickListener {
+class LocalLaunchAdapter(
+    private var localLaunches: ArrayList<LocalLaunch>,
+    private var viewModel: ArchiveViewModel
+) :
+    RecyclerView.Adapter<LocalLaunchAdapter.LocalLaunchViewHolder>(), LaunchClickListener {
 
     private lateinit var binding: LocalLaunchRowBinding
 
-    inner class LocalLaunchViewHolder(var customView:LocalLaunchRowBinding):RecyclerView.ViewHolder(customView.root){
+    inner class LocalLaunchViewHolder(var customView: LocalLaunchRowBinding) :
+        RecyclerView.ViewHolder(customView.root) {
 
     }
 
@@ -44,18 +50,33 @@ class LocalLaunchAdapter(private var localLaunches: ArrayList<LocalLaunch>):
     }
 
     override fun launchLongTapped(view: View, localLaunch: LocalLaunch): Boolean {
-        val position = localLaunches.indexOf(localLaunch)
+        val position = viewModel.localLaunchesList.value?.indexOf(localLaunch)
+        val res = viewModel.deleteLocalLaunch(localLaunch)
+        if (res) {
 
-        notifyItemRemoved(position)
+            val list = viewModel.localLaunchesList.value
+            if (position != null) {
+                list?.removeAt(position)
+            }
+            if (list != null) {
+                updateLocalLaunchList(list)
+            }
+            Toast.makeText(
+                view.context,
+                "${localLaunch.name} removed from archive!",
+                Toast.LENGTH_LONG,
+            ).show()
+            if (position != null) {
+                notifyItemRemoved(position)
+            }
+        }
 
-        // TODO: remove from list and go to list page
         return true
-
     }
 
-    fun updateCookList(newCooksList: List<LocalLaunch>) {
-        localLaunches.clear()
-        localLaunches.addAll(newCooksList)
+    fun updateLocalLaunchList(localLaunches: List<LocalLaunch>) {
+        this.localLaunches.clear()
+        this.localLaunches.addAll(localLaunches)
         notifyDataSetChanged()
     }
 }

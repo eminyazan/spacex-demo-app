@@ -4,24 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexdemo.R
 import com.example.spacexdemo.adapter.LocalLaunchAdapter
-import com.example.spacexdemo.constans.LOCAL_LAUNCH_KEY
-import com.example.spacexdemo.model.LocalLaunch
 import com.example.spacexdemo.viewmodel.ArchiveViewModel
 import kotlinx.android.synthetic.main.fragment_archived.*
 
 
 class ArchiveFragment : Fragment() {
 
-    private val adapter = LocalLaunchAdapter(arrayListOf())
+    private lateinit var adapter: LocalLaunchAdapter
     private lateinit var viewModel: ArchiveViewModel
     private lateinit var loader: LoadingDialog
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +26,9 @@ class ArchiveFragment : Fragment() {
         loader = LoadingDialog(requireContext())
 
         registerViewModel()
+        adapter = LocalLaunchAdapter(arrayListOf(), viewModel)
 
         viewModel.getAllLaunchesFromLocal()
-
-
     }
 
     override fun onCreateView(
@@ -67,14 +62,17 @@ class ArchiveFragment : Fragment() {
                 }
             }
         }
-        viewModel.launchesList.observe(viewLifecycleOwner) {
+        viewModel.localLaunchesList.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.isNotEmpty()) {
+                    println("Archive fragment local is not empty")
                     loader.cancel()
                     localRecyclerView.visibility = View.VISIBLE
                     emptyArchiveText.visibility = View.GONE
-                    adapter.updateCookList(it)
+                    adapter.updateLocalLaunchList(it)
                 } else {
+                    println("Archive fragment local is empty")
+                    localRecyclerView.visibility = View.GONE
                     emptyArchiveText.visibility = View.VISIBLE
                 }
             }
@@ -83,6 +81,7 @@ class ArchiveFragment : Fragment() {
 
 
     private fun setupRecycler() {
+        adapter = LocalLaunchAdapter(arrayListOf(), viewModel = viewModel)
         localRecyclerView.adapter = adapter
         localRecyclerView.layoutManager = LinearLayoutManager(context)
 

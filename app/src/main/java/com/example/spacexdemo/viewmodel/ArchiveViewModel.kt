@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.spacexdemo.db.LaunchDatabase
-import com.example.spacexdemo.model.Launch
 import com.example.spacexdemo.model.LocalLaunch
-import com.example.spacexdemo.repo.BaseRepo
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -14,7 +12,7 @@ class ArchiveViewModel(application: Application) :
     BaseViewModel(application) {
     private var job: Job? = null
 
-    val launchesList = MutableLiveData<MutableList<LocalLaunch>>()
+    val localLaunchesList = MutableLiveData<MutableList<LocalLaunch>>()
 
     private val launchDatabase by lazy {
         LaunchDatabase.getDatabase(getApplication()).launchDAO()
@@ -28,17 +26,27 @@ class ArchiveViewModel(application: Application) :
             val launches = launchDatabase.getAllLocalLaunches()
             if (launches.isNotEmpty()) {
                 println("Local launches not empty")
-                launchesList.postValue(launches.toMutableList())
+                localLaunchesList.postValue(launches.toMutableList())
                 loading.value = false
                 error.value = false
             } else {
                 println("Local launches empty")
                 loading.value = false
-                error.value = true
+                error.value = false
             }
         }
     }
 
+    fun deleteLocalLaunch(localLaunch: LocalLaunch): Boolean {
+        println("Deleted local launch --> ")
+        loading.value = true
+        error.value = false
+        viewModelScope.launch {
+            launchDatabase.deleteFromLocal(localLaunch)
+            getAllLaunchesFromLocal()
+        }
+        return true
+    }
 
 
     override fun onCleared() {

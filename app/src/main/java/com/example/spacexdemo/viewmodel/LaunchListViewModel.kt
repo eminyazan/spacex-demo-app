@@ -32,13 +32,11 @@ class LaunchListViewModel constructor(application: Application) : BaseViewModel(
     }
 
     fun getAllLaunches() {
+        println("Get all launch view model work")
         loading.value = true
         error.value = false
-        Log.d("Thread Outside", Thread.currentThread().name)
 
         viewModelScope.launch {
-            Log.d("Thread Inside", Thread.currentThread().name)
-
             val res = mainRepository.getLaunches()
             if (res.isSuccessful) {
                 launchesList.postValue(res.body())

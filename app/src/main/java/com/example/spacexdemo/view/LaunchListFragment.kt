@@ -76,12 +76,14 @@ class LaunchListFragment : Fragment(){
                 }
             }
         }
+        // TODO: remove observe not works with lists it works only first
         viewModel.launchesList.observe(viewLifecycleOwner) {
             it?.let {
+                println("Launch list fragment")
                 if (it.isNotEmpty()) {
                     loader.cancel()
                     recyclerView.visibility = View.VISIBLE
-                    adapter.updateCookList(it)
+                    adapter.updateLaunchList(it)
                 }
             }
         }

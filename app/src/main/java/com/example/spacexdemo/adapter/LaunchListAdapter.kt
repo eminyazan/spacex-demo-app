@@ -1,5 +1,6 @@
 package com.example.spacexdemo.adapter
 
+
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ class LaunchListAdapter(
     RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>(), LaunchClickListener {
 
     private lateinit var binding: LaunchRowBinding
+    private var isFirstRemove: Boolean = true
 
     inner class LaunchViewHolder(var customView: LaunchRowBinding) :
         RecyclerView.ViewHolder(customView.root)
@@ -45,9 +47,9 @@ class LaunchListAdapter(
     }
 
 
-    fun updateCookList(newCooksList: List<Launch>) {
-        launches.clear()
-        launches.addAll(newCooksList)
+    fun updateLaunchList(launches: List<Launch>) {
+        this.launches.clear()
+        this.launches.addAll(launches)
         notifyDataSetChanged()
     }
 
@@ -60,21 +62,34 @@ class LaunchListAdapter(
 
     override fun launchLongTapped(view: View, launch: Launch): Boolean {
 
-        val position = launches.indexOf(launch)
+        val position = viewModel.launchesList.value?.indexOf(launch)
 
-        val localLaunch = LocalLaunch(
-            name = launch.name,
-            detail = launch.details,
-            largeImage = launch.links.patch.large,
-            smallImage = launch.links.patch.small,
-            date = launch.dateUnix,
-            id = launch.id,
-            position = position,
+        val localLaunch = position?.let {
+            LocalLaunch(
+                name = launch.name,
+                detail = launch.details,
+                largeImage = launch.links.patch.large,
+                smallImage = launch.links.patch.small,
+                date = launch.dateUnix,
+                id = launch.id,
+                position = it,
+            )
+        }
+        if (position != null) {
+            val list = viewModel.launchesList.value
+            list?.removeAt(position)
+            if (list != null) {
+                updateLaunchList(list)
+            }
+        }
+
+        val res = localLaunch?.let { viewModel.insertLaunch(it) }
+        if (res == true) Toast.makeText(
+            view.context,
+            "${localLaunch.name} archived!",
+            Toast.LENGTH_LONG
         )
-        notifyItemRemoved(position)
-
-        val res = viewModel.insertLaunch(localLaunch)
-        if (res) Toast.makeText(view.context, "${localLaunch.name} archived!", Toast.LENGTH_LONG).show()
+            .show()
 
         return true
 
