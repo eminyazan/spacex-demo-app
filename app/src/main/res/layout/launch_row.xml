@@ -21,14 +21,14 @@
         android:clickable="true"
         android:focusable="true"
         android:longClickable="true"
+        android:onClick='@{(view)->listener.launchTapped(view,launch.id)}'
+        android:onLongClick='@{(view)->listener.launchLongTapped(view,launch)}'
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="117dp"
             android:layout_margin="1dp"
-            android:onClick='@{(view)->listener.launchTapped(view,launch.id)}'
-            android:onLongClick='@{(view)->listener.launchLongTapped(view,launch)}'
             android:orientation="horizontal">
 
             <ImageView

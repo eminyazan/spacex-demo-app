@@ -13,10 +13,7 @@ import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.constans.WEB_VIEW_DEFAULT_URL
 import com.example.spacexdemo.databinding.ActivityLaunchDetailBinding
-import com.example.spacexdemo.repo.BaseRepo
-import com.example.spacexdemo.service.BaseHTTPService
 import com.example.spacexdemo.viewmodel.LaunchDetailViewModel
-import com.example.spacexdemo.viewmodel.LaunchListViewModel
 import java.lang.NullPointerException
 
 class LaunchDetailActivity : AppCompatActivity() {
@@ -30,10 +27,11 @@ class LaunchDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO: find a solution for updating app bar from fragment and convert this class to fragment
         val actionBar: ActionBar? = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
         registerViewModel()
-        loader = LoadingDialog(this@LaunchDetailActivity)
+        loader = LoadingDialog(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_launch_detail)
 
 
@@ -70,7 +68,7 @@ class LaunchDetailActivity : AppCompatActivity() {
         binding.webViewButton.setOnClickListener {
             val launch = viewModel.launch.value
             launch?.let { launchNullable ->
-                val launchUrl = launchNullable.links?.reddit?.launch
+                val launchUrl = launchNullable.links.reddit.launch
                 if (launchUrl == null) {
                     goToWebView(binding.detailWidgetConstrainLayout.rootView, WEB_VIEW_DEFAULT_URL)
                 } else {

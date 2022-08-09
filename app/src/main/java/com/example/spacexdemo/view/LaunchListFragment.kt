@@ -9,23 +9,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexdemo.adapter.LaunchListAdapter
 import com.example.spacexdemo.R
-import com.example.spacexdemo.repo.BaseRepo
-import com.example.spacexdemo.service.BaseHTTPService
 import com.example.spacexdemo.viewmodel.LaunchListViewModel
 import kotlinx.android.synthetic.main.fragment_launch_list.*
 
-class LaunchListFragment : Fragment() {
+class LaunchListFragment : Fragment(){
 
     private lateinit var viewModel: LaunchListViewModel
     private lateinit var loader: LoadingDialog
 
-    private var adapter = LaunchListAdapter(arrayListOf())
+    private lateinit var adapter : LaunchListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loader = LoadingDialog(requireContext())
 
         registerViewModel()
+        adapter= LaunchListAdapter(arrayListOf(),viewModel)
 
         viewModel.getAllLaunches()
     }
@@ -87,5 +86,9 @@ class LaunchListFragment : Fragment() {
             }
         }
     }
+
+
+
+
 
 }

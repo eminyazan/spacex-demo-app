@@ -7,4 +7,5 @@
     <string name="dialog_archive">Do you want to archive this launch?</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_approve">Yes</string>
+    <string name="empty_archive">Your archive is empty!!</string>
 </resources>

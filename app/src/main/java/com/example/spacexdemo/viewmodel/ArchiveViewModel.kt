@@ -27,26 +27,19 @@ class ArchiveViewModel(application: Application) :
         viewModelScope.launch {
             val launches = launchDatabase.getAllLocalLaunches()
             if (launches.isNotEmpty()) {
+                println("Local launches not empty")
                 launchesList.postValue(launches.toMutableList())
                 loading.value = false
                 error.value = false
             } else {
+                println("Local launches empty")
                 loading.value = false
                 error.value = true
             }
         }
     }
 
-    fun insertLaunch(localLaunch: LocalLaunch): Boolean {
-        loading.value = true
-        error.value = false
-        viewModelScope.launch {
-            launchDatabase.insertLaunch(localLaunch)
-            loading.value = false
-            error.value = false
-        }
-        return true
-    }
+
 
     override fun onCleared() {
         super.onCleared()

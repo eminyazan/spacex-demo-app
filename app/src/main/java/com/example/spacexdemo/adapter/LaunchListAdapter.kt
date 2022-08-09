@@ -1,28 +1,26 @@
 package com.example.spacexdemo.adapter
 
-
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
-import com.example.spacexdemo.constans.LOCAL_LAUNCH_KEY
 import com.example.spacexdemo.databinding.LaunchRowBinding
 import com.example.spacexdemo.model.Launch
 import com.example.spacexdemo.model.LocalLaunch
-import com.example.spacexdemo.view.ArchiveFragment
 import com.example.spacexdemo.view.LaunchDetailActivity
-import com.example.spacexdemo.view.LaunchListFragmentDirections
+import com.example.spacexdemo.viewmodel.LaunchListViewModel
 
 
-class LaunchListAdapter(private val launches: ArrayList<Launch>) :
+class LaunchListAdapter(
+    private val launches: ArrayList<Launch>,
+    private val viewModel: LaunchListViewModel
+) :
     RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>(), LaunchClickListener {
 
     private lateinit var binding: LaunchRowBinding
@@ -30,10 +28,10 @@ class LaunchListAdapter(private val launches: ArrayList<Launch>) :
     inner class LaunchViewHolder(var customView: LaunchRowBinding) :
         RecyclerView.ViewHolder(customView.root)
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.launch_row, parent, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.launch_row, parent, false)
         return LaunchViewHolder(binding)
     }
 
@@ -45,6 +43,7 @@ class LaunchListAdapter(private val launches: ArrayList<Launch>) :
     override fun getItemCount(): Int {
         return launches.size
     }
+
 
     fun updateCookList(newCooksList: List<Launch>) {
         launches.clear()
@@ -73,13 +72,11 @@ class LaunchListAdapter(private val launches: ArrayList<Launch>) :
             position = position,
         )
         notifyItemRemoved(position)
-        println("Local launch adapter --> $localLaunch")
-        // TODO: fix navigation
-        val action = LaunchListFragmentDirections.goToArchive(localLaunch)
-        findNavController(view).navigate(action)
+
+        val res = viewModel.insertLaunch(localLaunch)
+        if (res) Toast.makeText(view.context, "${localLaunch.name} archived!", Toast.LENGTH_LONG).show()
+
         return true
 
     }
-
-
 }

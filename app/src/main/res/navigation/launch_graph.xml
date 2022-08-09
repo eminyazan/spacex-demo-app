@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/launch_graph"
     app:startDestination="@id/launchListFragment">
+
+
 
     <fragment
         android:id="@+id/launchListFragment"
@@ -17,6 +20,9 @@
             android:id="@+id/goToArchive"
             app:destination="@id/archiveFragment" />
     </fragment>
+
+
+
     <fragment
         android:id="@+id/launchDetailFragment"
         android:name="com.example.spacexdemo.view.LaunchDetailActivity"
@@ -33,6 +39,9 @@
             android:id="@+id/goToWebView"
             app:destination="@id/webViewFragment" />
     </fragment>
+
+
+
     <fragment
         android:id="@+id/webViewFragment"
         android:name="com.example.spacexdemo.view.webview.WebViewFragment"
@@ -43,14 +52,14 @@
             app:argType="string"
             android:defaultValue="https://www.spacex.com/" />
     </fragment>
+
+
+
     <fragment
         android:id="@+id/archiveFragment"
         android:name="com.example.spacexdemo.view.ArchiveFragment"
         android:label="fragment_archived"
         tools:layout="@layout/fragment_archived" >
-        <argument
-            android:name="localLaunch"
-            app:argType="com.example.spacexdemo.model.LocalLaunch"
-            app:nullable="true" />
     </fragment>
+
 </navigation>

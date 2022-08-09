@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexdemo.R
 import com.example.spacexdemo.adapter.LocalLaunchAdapter
 import com.example.spacexdemo.constans.LOCAL_LAUNCH_KEY
-import com.example.spacexdemo.db.LaunchDatabase
 import com.example.spacexdemo.model.LocalLaunch
 import com.example.spacexdemo.viewmodel.ArchiveViewModel
 import kotlinx.android.synthetic.main.fragment_archived.*
@@ -22,7 +21,7 @@ class ArchiveFragment : Fragment() {
     private val adapter = LocalLaunchAdapter(arrayListOf())
     private lateinit var viewModel: ArchiveViewModel
     private lateinit var loader: LoadingDialog
-    private lateinit var launchDatabase: LaunchDatabase
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,14 +30,6 @@ class ArchiveFragment : Fragment() {
         loader = LoadingDialog(requireContext())
 
         registerViewModel()
-        registerDB()
-
-        val bundle = Bundle()
-        val localLaunch = bundle.get(LOCAL_LAUNCH_KEY)
-        localLaunch?.let {
-            insertLaunch(localLaunch as LocalLaunch)
-            println("Parameter local launch ---> $localLaunch")
-        }
 
         viewModel.getAllLaunchesFromLocal()
 
@@ -57,6 +48,7 @@ class ArchiveFragment : Fragment() {
 
         setupRecycler()
         observeData()
+
     }
 
 
@@ -80,20 +72,15 @@ class ArchiveFragment : Fragment() {
                 if (it.isNotEmpty()) {
                     loader.cancel()
                     localRecyclerView.visibility = View.VISIBLE
+                    emptyArchiveText.visibility = View.GONE
                     adapter.updateCookList(it)
+                } else {
+                    emptyArchiveText.visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    private fun registerDB() {
-        launchDatabase = LaunchDatabase.getDatabase(requireContext())
-    }
-
-    private fun insertLaunch(localLaunch: LocalLaunch) {
-        val res = viewModel.insertLaunch(localLaunch)
-        if (res) Toast.makeText(requireContext(), "${localLaunch.name} removed from archive ", Toast.LENGTH_LONG).show()
-    }
 
     private fun setupRecycler() {
         localRecyclerView.adapter = adapter
