@@ -25,7 +25,7 @@ class LaunchListAdapter(
     RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>(), LaunchClickListener {
 
     private lateinit var binding: LaunchRowBinding
-    private var isFirstRemove: Boolean = true
+
 
     inner class LaunchViewHolder(var customView: LaunchRowBinding) :
         RecyclerView.ViewHolder(customView.root)
@@ -47,9 +47,9 @@ class LaunchListAdapter(
     }
 
 
-    fun updateLaunchList(launches: List<Launch>) {
+    fun updateLaunchList(list: List<Launch>) {
         this.launches.clear()
-        this.launches.addAll(launches)
+        this.launches.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -75,21 +75,22 @@ class LaunchListAdapter(
                 position = it,
             )
         }
-        if (position != null) {
-            val list = viewModel.launchesList.value
-            list?.removeAt(position)
-            if (list != null) {
-                updateLaunchList(list)
-            }
-        }
+
 
         val res = localLaunch?.let { viewModel.insertLaunch(it) }
-        if (res == true) Toast.makeText(
-            view.context,
-            "${localLaunch.name} archived!",
-            Toast.LENGTH_LONG
-        )
-            .show()
+        if (res == true) {
+            Toast.makeText(
+                view.context,
+                "${localLaunch.name} archived!",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+
+            println("Liste ---> ${viewModel.launchesList.value!!.size}")
+            viewModel.launchesList.value!!.removeAt(position)
+            println("Liste ---> ${viewModel.launchesList.value!!.size}")
+            updateLaunchList(viewModel.launchesList.value!!.toList())
+        }
 
         return true
 

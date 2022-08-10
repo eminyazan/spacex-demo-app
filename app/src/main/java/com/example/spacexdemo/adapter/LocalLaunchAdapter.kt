@@ -64,7 +64,7 @@ class LocalLaunchAdapter(
             Toast.makeText(
                 view.context,
                 "${localLaunch.name} removed from archive!",
-                Toast.LENGTH_LONG,
+                Toast.LENGTH_SHORT,
             ).show()
             if (position != null) {
                 notifyItemRemoved(position)

@@ -30,6 +30,7 @@ class ArchiveViewModel(application: Application) :
                 loading.value = false
                 error.value = false
             } else {
+                localLaunchesList.postValue(launches.toMutableList())
                 println("Local launches empty")
                 loading.value = false
                 error.value = false
