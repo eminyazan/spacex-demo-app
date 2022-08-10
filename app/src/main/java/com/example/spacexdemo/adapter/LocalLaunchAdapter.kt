@@ -12,7 +12,7 @@ import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.databinding.LocalLaunchRowBinding
 import com.example.spacexdemo.model.LocalLaunch
-import com.example.spacexdemo.view.LaunchDetailActivity
+import com.example.spacexdemo.view.LaunchDetailFragment
 import com.example.spacexdemo.viewmodel.ArchiveViewModel
 
 class LocalLaunchAdapter(
@@ -44,7 +44,7 @@ class LocalLaunchAdapter(
     }
 
     override fun launchTapped(view: View, launchId: String) {
-        val intent = Intent(view.context, LaunchDetailActivity::class.java)
+        val intent = Intent(view.context, LaunchDetailFragment::class.java)
         intent.putExtra(LAUNCH_ID_KEY, launchId)
         startActivity(view.context, intent, null)
     }

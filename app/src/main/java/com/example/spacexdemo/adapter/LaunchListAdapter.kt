@@ -1,31 +1,30 @@
 package com.example.spacexdemo.adapter
 
-
-import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.databinding.LaunchRowBinding
 import com.example.spacexdemo.model.Launch
 import com.example.spacexdemo.model.LocalLaunch
-import com.example.spacexdemo.view.LaunchDetailActivity
+import com.example.spacexdemo.view.LaunchListFragmentDirections
 import com.example.spacexdemo.viewmodel.LaunchListViewModel
-
+import kotlinx.android.synthetic.main.local_launch_row.view.*
 
 class LaunchListAdapter(
     private val launches: ArrayList<Launch>,
-    private val viewModel: LaunchListViewModel
+    private val viewModel: LaunchListViewModel,
 ) :
     RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>(), LaunchClickListener {
 
     private lateinit var binding: LaunchRowBinding
-
 
     inner class LaunchViewHolder(var customView: LaunchRowBinding) :
         RecyclerView.ViewHolder(customView.root)
@@ -55,9 +54,8 @@ class LaunchListAdapter(
 
 
     override fun launchTapped(view: View, launchId: String) {
-        val intent = Intent(view.context, LaunchDetailActivity::class.java)
-        intent.putExtra(LAUNCH_ID_KEY, launchId)
-        startActivity(view.context, intent, null)
+        val action=LaunchListFragmentDirections.actionLaunchListFragmentToLaunchDetailFragment(launchIdKey = launchId)
+        Navigation.findNavController(view).navigate(action)
     }
 
     override fun launchLongTapped(view: View, launch: Launch): Boolean {
@@ -76,8 +74,10 @@ class LaunchListAdapter(
             )
         }
 
+        val res = localLaunch?.let {
+            viewModel.insertLaunch(it)
+        }
 
-        val res = localLaunch?.let { viewModel.insertLaunch(it) }
         if (res == true) {
             Toast.makeText(
                 view.context,

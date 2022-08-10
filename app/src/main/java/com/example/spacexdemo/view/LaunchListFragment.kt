@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexdemo.adapter.LaunchListAdapter
 import com.example.spacexdemo.R
@@ -16,7 +18,6 @@ class LaunchListFragment : Fragment(){
 
     private lateinit var viewModel: LaunchListViewModel
     private lateinit var loader: LoadingDialog
-
     private lateinit var adapter : LaunchListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +77,7 @@ class LaunchListFragment : Fragment(){
                 }
             }
         }
-        // TODO: remove observe not works with lists it works only first
+
         viewModel.launchesList.observe(viewLifecycleOwner) {
             it?.let {
                 println("Launch list fragment")
@@ -88,8 +89,6 @@ class LaunchListFragment : Fragment(){
             }
         }
     }
-
-
 
 
 

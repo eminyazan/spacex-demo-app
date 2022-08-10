@@ -1,67 +1,69 @@
 package com.example.spacexdemo.view
 
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.constans.WEB_VIEW_DEFAULT_URL
-import com.example.spacexdemo.databinding.ActivityLaunchDetailBinding
+import com.example.spacexdemo.databinding.FragmentLaunchDetailBinding
 import com.example.spacexdemo.viewmodel.LaunchDetailViewModel
-import java.lang.NullPointerException
 
-class LaunchDetailActivity : AppCompatActivity() {
+class LaunchDetailFragment : Fragment() {
 
     private var launchId: String? = null
     private lateinit var viewModel: LaunchDetailViewModel
-    private lateinit var binding: ActivityLaunchDetailBinding
+    private lateinit var binding: FragmentLaunchDetailBinding
     private lateinit var loader: LoadingDialog
+    private lateinit var appBar: ActionBar
 
     // TODO: Launch image not loading
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // TODO: find a solution for updating app bar from fragment and convert this class to fragment
-        val actionBar: ActionBar? = supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+//        val actionBar: ActionBar? = supportActionBar
+//        actionBar?.setDisplayHomeAsUpEnabled(true)
+        loader = LoadingDialog(requireContext())
         registerViewModel()
-        loader = LoadingDialog(this)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_launch_detail)
+        binding = DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_launch_detail)
 
 
-        intent?.let {
-            launchId = it.getStringExtra(LAUNCH_ID_KEY)
+        arguments?.let {
+            launchId = LaunchDetailFragmentArgs.fromBundle(it).launchIdKey
+            viewModel.getLaunch(launchId!!)
         }
 
 
-        val res = registerViewModel()
-        println("Res --> $res")
-        showElements(res)
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_launch_detail, container, false)
+        appBar = (activity as AppCompatActivity).supportActionBar!!
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeData()
         webViewButton()
     }
 
     private fun goToWebView(view: View, url: String) {
-        // TODO: error fix it
-        val action = LaunchDetailActivityDirections.goToWebView(url)
+        // TODO: error fix it add parameter
+        val action = LaunchDetailFragmentDirections.actionLaunchDetailFragmentToWebViewFragment()
         Navigation.findNavController(view).navigate(action)
 
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun webViewButton() {
@@ -79,20 +81,8 @@ class LaunchDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showElements(res: Boolean) {
-        if (res) {
-            intent?.let {
-                viewModel.getLaunch(it.getStringExtra(LAUNCH_ID_KEY)!!)
-                observeData()
-            }
-
-        } else {
-            Toast.makeText(this, "Error occurred try again later", Toast.LENGTH_LONG).show()
-        }
-    }
-
     private fun observeData() {
-        viewModel.loading.observe(this) {
+        viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
                 if (it) {
                     loader.show()
@@ -100,26 +90,17 @@ class LaunchDetailActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.launch.observe(this) {
+        viewModel.launch.observe(viewLifecycleOwner) {
             it?.let {
                 loader.cancel()
                 binding.launch = it
-                title = it.name
+                appBar.title=it.name
             }
         }
     }
 
-    private fun registerViewModel(): Boolean {
-        return try {
-
-            viewModel = ViewModelProvider(this)[LaunchDetailViewModel::class.java]
-
-            true
-        } catch (e: NullPointerException) {
-            println(e)
-            false
-        }
-
+    private fun registerViewModel() {
+        viewModel = ViewModelProvider(this)[LaunchDetailViewModel::class.java]
     }
 
 

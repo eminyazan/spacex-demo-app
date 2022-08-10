@@ -29,7 +29,6 @@
         <activity
             android:name=".view.MainActivity"
             android:exported="true" />
-        <activity android:name=".view.LaunchDetailActivity" />
     </application>
 
 </manifest>
