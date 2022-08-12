@@ -8,38 +8,35 @@
     <fragment
         android:id="@+id/launchDetailFragment"
         android:name="com.example.spacexdemo.view.LaunchDetailFragment"
-        android:label="activity_launch_detail"
+        android:label="Launch Detail"
         tools:layout="@layout/fragment_launch_detail" >
-        <action
-            android:id="@+id/action_launchDetailFragment_to_webViewFragment"
-            app:destination="@id/webViewFragment" />
         <argument
             android:name="launch_id_key"
             app:nullable="false"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_launchDetailFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/archiveFragment"
         android:name="com.example.spacexdemo.view.ArchiveFragment"
-        android:label="fragment_archived"
+        android:label="Archived Launches"
         tools:layout="@layout/fragment_archived" >
         <action
-            android:id="@+id/action_archiveFragment_to_launchDetailFragment"
+            android:id="@+id/goDetailFromArchive"
             app:destination="@id/launchDetailFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/launchListFragment"
         android:name="com.example.spacexdemo.view.LaunchListFragment"
-        android:label="fragment_launch_list"
+        android:label="Launches"
         tools:layout="@layout/fragment_launch_list" >
         <action
-            android:id="@+id/action_launchListFragment_to_launchDetailFragment"
+            android:id="@+id/goDetailFromList"
             app:destination="@id/launchDetailFragment" />
-        <action
-            android:id="@+id/action_launchListFragment_to_archiveFragment"
-            app:destination="@id/archiveFragment" />
     </fragment>
 
     <fragment

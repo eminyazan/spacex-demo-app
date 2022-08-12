@@ -62,6 +62,8 @@ class ArchiveFragment : Fragment() {
                 }
             }
         }
+
+        // TODO: when go back, list page or archive page is not visible when update changes it looks fine
         viewModel.localLaunchesList.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.isNotEmpty()) {

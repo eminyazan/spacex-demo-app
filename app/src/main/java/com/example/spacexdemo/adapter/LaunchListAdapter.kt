@@ -54,7 +54,7 @@ class LaunchListAdapter(
 
 
     override fun launchTapped(view: View, launchId: String) {
-        val action=LaunchListFragmentDirections.actionLaunchListFragmentToLaunchDetailFragment(launchIdKey = launchId)
+        val action=LaunchListFragmentDirections.goDetailFromList(launchIdKey = launchId)
         Navigation.findNavController(view).navigate(action)
     }
 

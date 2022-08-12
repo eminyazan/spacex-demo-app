@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacexdemo.R
 import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.databinding.LocalLaunchRowBinding
 import com.example.spacexdemo.model.LocalLaunch
+import com.example.spacexdemo.view.ArchiveFragmentDirections
 import com.example.spacexdemo.view.LaunchDetailFragment
+import com.example.spacexdemo.view.LaunchListFragmentDirections
 import com.example.spacexdemo.viewmodel.ArchiveViewModel
 
 class LocalLaunchAdapter(
@@ -44,9 +47,8 @@ class LocalLaunchAdapter(
     }
 
     override fun launchTapped(view: View, launchId: String) {
-        val intent = Intent(view.context, LaunchDetailFragment::class.java)
-        intent.putExtra(LAUNCH_ID_KEY, launchId)
-        startActivity(view.context, intent, null)
+        val action= ArchiveFragmentDirections.goDetailFromArchive(launchIdKey = launchId)
+        Navigation.findNavController(view).navigate(action)
     }
 
     override fun launchLongTapped(view: View, localLaunch: LocalLaunch): Boolean {

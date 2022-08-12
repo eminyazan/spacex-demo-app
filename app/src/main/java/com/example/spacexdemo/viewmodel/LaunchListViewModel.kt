@@ -17,6 +17,7 @@ class LaunchListViewModel constructor(application: Application) : BaseViewModel(
     private val retrofitService = BaseHTTPService.getInstance()
     private val mainRepository = BaseRepo(retrofitService)
     private var job: Job? = null
+
     private val launchDatabase by lazy {
         LaunchDatabase.getDatabase(getApplication()).launchDAO()
     }
@@ -32,7 +33,7 @@ class LaunchListViewModel constructor(application: Application) : BaseViewModel(
     }
 
     fun getAllLaunches() {
-        println("Get all launch view model work")
+        println("Get all launch view model ---> ${launchesList.value?.size}")
         loading.value = true
         error.value = false
 

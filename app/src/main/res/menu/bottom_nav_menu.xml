@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/onlineTab"
+        android:id="@+id/launchListFragment"
         android:title="Live Data"
+        android:enabled="true"
         android:icon="@drawable/ic_online_tab_foreground"/>
 
     <item
-        android:id="@+id/archiveTab"
+        android:id="@+id/archiveFragment"
         android:title="Archive"
+        android:enabled="true"
         android:icon="@drawable/ic_archive_tab_foreground"/>
 </menu>

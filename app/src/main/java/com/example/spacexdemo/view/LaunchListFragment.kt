@@ -5,9 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexdemo.adapter.LaunchListAdapter
 import com.example.spacexdemo.R
@@ -22,23 +21,24 @@ class LaunchListFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loader = LoadingDialog(requireContext())
 
-        registerViewModel()
-        adapter= LaunchListAdapter(arrayListOf(),viewModel)
-
-        viewModel.getAllLaunches()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_launch_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loader = LoadingDialog(requireContext())
+
+        registerViewModel()
+        adapter= LaunchListAdapter(arrayListOf(),viewModel)
+        Toast.makeText(view.context,"List fragment created",Toast.LENGTH_SHORT).show()
 
         setupRecyclerView()
 
@@ -47,6 +47,8 @@ class LaunchListFragment : Fragment(){
 
             swipeRefresh.isRefreshing = false
         }
+
+        viewModel.getAllLaunches()
 
         observeData()
     }
@@ -80,8 +82,9 @@ class LaunchListFragment : Fragment(){
 
         viewModel.launchesList.observe(viewLifecycleOwner) {
             it?.let {
-                println("Launch list fragment")
+
                 if (it.isNotEmpty()) {
+                    println("Launch list fragment observe data not empty")
                     loader.cancel()
                     recyclerView.visibility = View.VISIBLE
                     adapter.updateLaunchList(it)
