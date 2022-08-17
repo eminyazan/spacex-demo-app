@@ -48,20 +48,20 @@ class ArchiveFragment : Fragment() {
 
 
     private fun observeData() {
-        viewModel.loading.observe(viewLifecycleOwner) {
-            it?.let {
-                if (it) {
-                    loader.show()
-                }
-            }
-        }
-        viewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                if (!it) {
-                    loader.cancel()
-                }
-            }
-        }
+//        viewModel.loading.observe(viewLifecycleOwner) {
+//            it?.let {
+//                if (it) {
+//                    loader.show()
+//                }
+//            }
+//        }
+//        viewModel.error.observe(viewLifecycleOwner) {
+//            it?.let {
+//                if (!it) {
+//                    loader.cancel()
+//                }
+//            }
+//        }
 
         // TODO: when go back, list page or archive page is not visible when update changes it looks fine
         viewModel.localLaunchesList.observe(viewLifecycleOwner) {

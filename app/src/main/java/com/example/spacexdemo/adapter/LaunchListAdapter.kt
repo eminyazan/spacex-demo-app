@@ -1,28 +1,19 @@
 package com.example.spacexdemo.adapter
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacexdemo.R
-import com.example.spacexdemo.constans.LAUNCH_ID_KEY
 import com.example.spacexdemo.databinding.LaunchRowBinding
 import com.example.spacexdemo.model.Launch
-import com.example.spacexdemo.model.LocalLaunch
-import com.example.spacexdemo.view.LaunchListFragmentDirections
-import com.example.spacexdemo.viewmodel.LaunchListViewModel
-import kotlinx.android.synthetic.main.local_launch_row.view.*
+
 
 class LaunchListAdapter(
     private val launches: ArrayList<Launch>,
-    private val viewModel: LaunchListViewModel,
+    private val listener: LaunchClickListener
 ) :
-    RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>(), LaunchClickListener {
+    RecyclerView.Adapter<LaunchListAdapter.LaunchViewHolder>() {
 
     private lateinit var binding: LaunchRowBinding
 
@@ -38,7 +29,7 @@ class LaunchListAdapter(
 
     override fun onBindViewHolder(holder: LaunchViewHolder, position: Int) {
         holder.customView.launch = launches[position]
-        holder.customView.listener = this
+        holder.customView.listener = listener
     }
 
     override fun getItemCount(): Int {
@@ -52,47 +43,45 @@ class LaunchListAdapter(
         notifyDataSetChanged()
     }
 
-
-    override fun launchTapped(view: View, launchId: String) {
-        val action=LaunchListFragmentDirections.goDetailFromList(launchIdKey = launchId)
-        Navigation.findNavController(view).navigate(action)
-    }
-
-    override fun launchLongTapped(view: View, launch: Launch): Boolean {
-
-        val position = viewModel.launchesList.value?.indexOf(launch)
-
-        val localLaunch = position?.let {
-            LocalLaunch(
-                name = launch.name,
-                detail = launch.details,
-                largeImage = launch.links.patch.large,
-                smallImage = launch.links.patch.small,
-                date = launch.dateUnix,
-                id = launch.id,
-                position = it,
-            )
-        }
-
-        val res = localLaunch?.let {
-            viewModel.insertLaunch(it)
-        }
-
-        if (res == true) {
-            Toast.makeText(
-                view.context,
-                "${localLaunch.name} archived!",
-                Toast.LENGTH_SHORT
-            )
-                .show()
-
-            println("Liste ---> ${viewModel.launchesList.value!!.size}")
-            viewModel.launchesList.value!!.removeAt(position)
-            println("Liste ---> ${viewModel.launchesList.value!!.size}")
-            updateLaunchList(viewModel.launchesList.value!!.toList())
-        }
-
-        return true
-
-    }
+//
+//    override fun launchTapped(view: View, launchId: String) {
+//        val action = LaunchListFragmentDirections.goDetailFromList(launchIdKey = launchId)
+//        Navigation.findNavController(view).navigate(action)
+////        val action=LaunchListFragmentDirections.actionLaunchListFragmentToTestFragment()
+////        Navigation.findNavController(view).navigate(action)
+//    }
+//
+//
+//    override fun launchLongTapped(view: View, launch: Launch): Boolean {
+//
+//        val position = launches.indexOf(launch)
+//
+//        val localLaunch = LocalLaunch(
+//            name = launch.name,
+//            detail = launch.details,
+//            largeImage = launch.links.patch.large,
+//            smallImage = launch.links.patch.small,
+//            date = launch.dateUnix,
+//            id = launch.id,
+//            position = position,
+//        )
+//
+//
+////        if (res == true) {
+////            Toast.makeText(
+////                view.context,
+////                "${localLaunch.name} archived!",
+////                Toast.LENGTH_SHORT
+////            )
+////                .show()
+////
+////            println("Liste ---> ${viewModel.launchesList.value!!.size}")
+////            viewModel.launchesList.value!!.removeAt(position)
+////            println("Liste ---> ${viewModel.launchesList.value!!.size}")
+////            updateLaunchList(viewModel.launchesList.value!!.toList())
+////        }
+//
+//        return true
+//
+//    }
 }

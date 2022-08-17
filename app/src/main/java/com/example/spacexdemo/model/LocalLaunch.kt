@@ -14,5 +14,4 @@ data class LocalLaunch(
     var largeImage: String,
     var smallImage: String,
     var date: Int,
-    var position: Int,
 ):Serializable

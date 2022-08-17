@@ -37,6 +37,9 @@
         <action
             android:id="@+id/goDetailFromList"
             app:destination="@id/launchDetailFragment" />
+        <action
+            android:id="@+id/action_launchListFragment_to_testFragment"
+            app:destination="@id/testFragment" />
     </fragment>
 
     <fragment
@@ -44,5 +47,10 @@
         android:name="com.example.spacexdemo.view.webview.WebViewFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_web_view" />
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.example.spacexdemo.view.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
 
 </navigation>

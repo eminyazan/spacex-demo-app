@@ -20,28 +20,28 @@ class ArchiveViewModel(application: Application) :
 
 
     fun getAllLaunchesFromLocal() {
-        loading.value = true
-        error.value = false
+//        loading.value = true
+//        error.value = false
         viewModelScope.launch {
             val launches = launchDatabase.getAllLocalLaunches()
             if (launches.isNotEmpty()) {
                 println("Local launches not empty")
                 localLaunchesList.postValue(launches.toMutableList())
-                loading.value = false
-                error.value = false
+//                loading.value = false
+//                error.value = false
             } else {
                 localLaunchesList.postValue(launches.toMutableList())
                 println("Local launches empty")
-                loading.value = false
-                error.value = false
+//                loading.value = false
+//                error.value = false
             }
         }
     }
 
     fun deleteLocalLaunch(localLaunch: LocalLaunch): Boolean {
         println("Deleted local launch --> ")
-        loading.value = true
-        error.value = false
+//        loading.value = true
+//        error.value = false
         viewModelScope.launch {
             launchDatabase.deleteFromLocal(localLaunch)
             getAllLaunchesFromLocal()

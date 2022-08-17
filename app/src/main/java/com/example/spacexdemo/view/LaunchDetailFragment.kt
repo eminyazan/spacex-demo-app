@@ -65,27 +65,27 @@ class LaunchDetailFragment : Fragment() {
 
     private fun webViewButton() {
         binding.detailWebViewButton.setOnClickListener {
-            val launch = viewModel.launch.value
-            launch?.let { launchNullable ->
-                val launchUrl = launchNullable.links.reddit.launch
-                if (launchUrl == null) {
-                    goToWebView(it, WEB_VIEW_DEFAULT_URL)
-                } else {
-                    goToWebView(it, launchUrl.toString())
-                }
-            }
+//            val launch = viewModel.launch.value
+//            launch?.let { launchNullable ->
+//                val launchUrl = launchNullable.links.reddit.launch
+//                if (launchUrl == null) {
+//                    goToWebView(it, WEB_VIEW_DEFAULT_URL)
+//                } else {
+//                    goToWebView(it, launchUrl.toString())
+//                }
+//            }
 
         }
     }
 
     private fun observeData() {
-        viewModel.loading.observe(viewLifecycleOwner) {
-            it?.let {
-                if (it) {
-                    loader.show()
-                }
-            }
-        }
+//        viewModel.loading.observe(viewLifecycleOwner) {
+//            it?.let {
+//                if (it) {
+//                    loader.show()
+//                }
+//            }
+//        }
 
         viewModel.launch.observe(viewLifecycleOwner) {
             it?.let {
@@ -95,6 +95,8 @@ class LaunchDetailFragment : Fragment() {
                 loader.cancel()
             }
         }
+
+//        binding.launch=viewModel.getLaunch(launchId!!)
     }
 
     private fun registerViewModel() {

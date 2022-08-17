@@ -11,9 +11,11 @@ import retrofit2.http.Path
 interface BaseHTTPService {
 
 
+    // TODO: Look retrofit without using coroutine or async func
+
     //https://api.spacexdata.com/v5/launches/:id
     @GET("v5/launches")
-    suspend fun getLaunches(): Response<MutableList<Launch>>
+    suspend fun getLaunches(): Response<ArrayList<Launch>>
 
 
     @GET("v5/launches/{id}")

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 
 abstract class BaseViewModel (application: Application): AndroidViewModel(application) {
 
-    val loading = MutableLiveData<Boolean>()
-    val error = MutableLiveData<Boolean>()
+//    val loading = MutableLiveData<Boolean>()
+//    val error = MutableLiveData<Boolean>()
 
 }

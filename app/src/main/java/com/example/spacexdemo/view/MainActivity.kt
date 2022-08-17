@@ -38,14 +38,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        println("Back button tool bar tapped")
+        println("Back button app bar tapped")
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
+
         println("Back button tapped")
         super.onBackPressed()
-        navController.popBackStack()
     }
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        return when (item.itemId) {
